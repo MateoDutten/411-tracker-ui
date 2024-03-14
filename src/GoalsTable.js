@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {DataGrid} from '@mui/x-data-grid';
 import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
 
 function GoalsTable() {
   const columns = [
@@ -16,54 +18,41 @@ function GoalsTable() {
   ];
 
   return (
-    <div style={{height: 200, width: '100%'}}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        hideFooter={true}
-        checkboxSelection
-      />
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        hideFooter={true}
-        checkboxSelection
-      />
+    <Container>
+      <Typography variant="h3" gutterBottom> Year </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            hideFooter={true}
-            checkboxSelection
-          />
+        <Grid item xs={12}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
         </Grid>
-        <Grid item xs={3}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            hideFooter={true}
-            checkboxSelection
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            hideFooter={true}
-            checkboxSelection
-          />
-        </Grid>
-        <Grid item xs={3}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            hideFooter={true}
-            checkboxSelection
-          />
+        <Grid item xs={12}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
         </Grid>
       </Grid>
-    </div>
+      <Typography variant="h3" gutterBottom> Month </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
+        </Grid>
+      </Grid>
+      <Typography variant="h3" gutterBottom> Week </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 
