@@ -1,10 +1,10 @@
 import * as React from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import {Fab} from "@mui/material";
+import {Fab, Typography,} from "@mui/material";
 import AddGoalDialog from "./AddGoalDialog";
-import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 
-function AddGoalButton() {
+function AddGoalButton(props) {
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
       setOpen(true);
@@ -13,22 +13,16 @@ function AddGoalButton() {
       setOpen(false);
     };
 
-    const style = {
-      margin: 0,
-      top: 'auto',
-      right: 20,
-      bottom: 20,
-      left: 'auto',
-      position: 'fixed',
-    }
 
     return (
-      <Container>
-        <Fab style={style} color="primary" aria-label="add" onClick={handleClickOpen}>
-          <AddIcon />
-        </Fab>
-        <AddGoalDialog open={open} onClose={handleClose} />
-      </Container>
+      <Box> 
+        <Typography variant="h3" gutterBottom sx={{ textTransform: "capitalize"}} > {props.timeframe} 
+          <Fab color="primary" aria-label="add" onClick={handleClickOpen} sx={{ marginLeft: 3}}>
+            <AddIcon />
+          </Fab>
+          <AddGoalDialog open={open} onClose={handleClose} />
+        </Typography>
+      </Box>
     );
 }
 

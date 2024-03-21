@@ -1,8 +1,10 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { purple } from '@mui/material/colors';
+import AddGoalButton from './AddGoalButton';
 
 function GoalsTable() {
   const columns = [
@@ -17,41 +19,50 @@ function GoalsTable() {
     {id: "3", goal: "asd", date: "321"},
   ];
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : purple[100],
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.palette.text.primary,
+  }));
+
   return (
     <Container>
-      <Typography variant="h3" gutterBottom> Year </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-      </Grid>
-      <Typography variant="h3" gutterBottom> Month </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-        <Grid item xs={12}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-      </Grid>
-      <Typography variant="h3" gutterBottom> Week </Typography>
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-        <Grid item xs={3}>
-          <Paper elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Paper>
-        </Grid>
-      </Grid>
+      <AddGoalButton timeframe="year"/>
+    
+      <Stack container spacing={2}>
+        <Stack item xs={12}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+        <Stack item xs={12}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+      </Stack>
+      <AddGoalButton timeframe="month"/>
+      <Stack container spacing={2}>
+        <Stack item xs={12}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+        <Stack item xs={12}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+      </Stack>
+      <AddGoalButton timeframe="week"/>
+      <Stack container spacing={2}>
+        <Stack item xs={3}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+        <Stack item xs={3}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+        <Stack item xs={3}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+       <Stack item xs={3}>
+          <Item elevation={1}> Lorem ipsum dolor sit amet, consectetur adipiscing elit </Item>
+        </Stack>
+      </Stack>
     </Container>
   );
 }
