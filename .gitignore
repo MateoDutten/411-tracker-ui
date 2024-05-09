@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .venv 
+self_experiment.py
 
 # testing
 /coverage
