@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-def goal_table(time, goals, width,):
+def goal_table(time, goals, goal_status, width,):
     
     st.write(time)
     
@@ -10,9 +10,7 @@ def goal_table(time, goals, width,):
                 goals
             ],
             "Status": [
-            False,
-            False,
-            False,
+                goal_status
             ]
         }
     )
@@ -23,6 +21,7 @@ def goal_table(time, goals, width,):
             "Status": st.column_config.CheckboxColumn(
                 "Goal Status",
                 help="select wich goal is **ended**",
+                width="small",
                 default=False,
         ),
             "Goal Name": st.column_config.Column(
@@ -32,4 +31,8 @@ def goal_table(time, goals, width,):
         hide_index=True,
     )
 
-goal_table("Years", "asd", 800)
+goal_table("Years", "asd", False ,800,)
+
+goal_table("Months", "asd", False ,600,)
+
+goal_table("Weeks", "asdsd", False ,500,)
