@@ -3,15 +3,17 @@ import pandas as pd
 import requests
 
 
-def get_data(index, type):
+def get_data(_type):
     _url = "http://localhost:8000/goal"
     r = requests.get(url=_url)
     data = r.json()
-    goal = data[index][type]
+    goal = []
+    for index in range(len(data)):
+        goal = data[index].get(_type)
     return goal
 
 
-data_goal_year = get_data(1, "goal")
+data_goal_year = get_data("goal")
 
 
 def goal_table(time, goals, goal_status, width):
