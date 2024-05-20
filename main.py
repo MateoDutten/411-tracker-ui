@@ -2,36 +2,24 @@ import streamlit as st
 import pandas as pd
 import requests
 
+TABLE_TYPES = [{"timeframe": "year"}, {"timeframe": "month"}, {"timeframe": "week"}]
 
-def get_data(index, type):
+
+def get_data(params):
     _url = "http://localhost:8000/goal"
-    r = requests.get(url=_url)
-    data = r.json()
-    goal = data[index][type]
-    return goal
+    r = requests.get(url=_url, params=params)
+    return r.json()
 
 
-data_goal_year = get_data(1, "goal")
-
-
-def goal_table(time, goals, goal_status, width):
-    st.write(time)
-
-    dt = pd.DataFrame({
-        "Goal Name": [
-            goals
-        ],
-        "Status": [
-            goal_status
-        ]
-    })
+def goal_table(_type, goals, key):
+    st.write(_type["timeframe"])
     st.data_editor(
-        dt,
-        width=width,
+        pd.DataFrame(goals),
+        width=800,
+        key=key,
         column_config={
             "Status": st.column_config.CheckboxColumn(
-                "Goal Status",
-                help="select wich goal is **ended**",
+                help="select which goal is **ended**",
                 width="small",
                 default=False,
             ),
@@ -43,8 +31,6 @@ def goal_table(time, goals, goal_status, width):
     )
 
 
-goal_table("Years", data_goal_year, False, 800, )
-
-goal_table("Months", "asd", False, 600, )
-
-goal_table("Weeks", "asdsd", False, 500, )
+for _type in TABLE_TYPES:
+    goals_dict = get_data(_type)
+    goal_table(_type, goals_dict, _type)
