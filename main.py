@@ -4,7 +4,6 @@ import requests
 
 TABLE_TYPES = [{"timeframe": "year"}, {"timeframe": "month"}, {"timeframe": "week"}]
 
-
 def get_data(params):
     _url = "http://localhost:8000/goal"
     r = requests.get(url=_url, params=params)
