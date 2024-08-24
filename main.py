@@ -1,13 +1,23 @@
 import streamlit as st
 import pandas as pd
 import requests
+import time
+
 
 TABLE_TYPES = [{"timeframe": "year"}, {"timeframe": "month"}, {"timeframe": "week"}]
 
-def get_data(params):
+
+def get_goals(params):
     _url = "http://localhost:8000/goal"
     r = requests.get(url=_url, params=params)
     return r.json()
+
+
+def create_goal(data):
+    _url = "http://localhost:8000/goal"
+    r = requests.post(url=_url, data=data)
+    print(r)
+    return r.text
 
 
 def goal_table(_type, goals, key):
@@ -30,6 +40,25 @@ def goal_table(_type, goals, key):
     )
 
 
+def form_appear():
+    with st.form("add_goal_form"):
+        st.write("Add Goal")
+        data = {
+            "name": st.text_input("Goal Name"),
+            "timeframe": st.selectbox("timeframe", options={"week", "month", "year"}),
+            "start_date": time.strftime("%Y-%m-%d")
+
+        }
+        submitted = st.form_submit_button("Submit", on_click=create_goal, kwargs={"data": data})
+        print(submitted)
+
+
+def add_goal_button():
+    if st.button("Add Goal"):
+        form_appear()
+
+
 for _type in TABLE_TYPES:
-    goals_dict = get_data(_type)
+    goals_dict = get_goals(_type)
     goal_table(_type, goals_dict, _type)
+add_goal_button()
