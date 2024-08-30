@@ -13,8 +13,11 @@ def get_goals(params):
     return r.json()
 
 
-def create_goal(data):
+def create_goal():
     _url = "http://localhost:8000/goal"
+    data = {"name": st.session_state.goal_name,
+            "timeframe": st.session_state.timeframe,
+            "start_date": st.session_state.goal_start_date}
     r = requests.post(url=_url, data=data)
     print(r)
     return r.text
@@ -42,11 +45,11 @@ def goal_table(_type, goals, key):
 
 def form_appear():
     with st.form("add_goal_form"):
-        st.session_state["timeframe"] = "week"
         st.write("Add Goal")
-        timeframe = st.selectbox("timeframe", ("month","week", "years"))
-        data = {"name": "name", "timeframe": timeframe, "start_date": "2024-05-10"}
-        submitted = st.form_submit_button("Submit", on_click=create_goal, kwargs={"data": data})
+        st.text_input("Goal Name", key="goal_name")
+        st.selectbox("timeframe", ("month", "week", "year"), key="timeframe")
+        st.date_input("start date", key="goal_start_date")
+        submitted = st.form_submit_button("Submit", on_click=create_goal)
         print(submitted)
 
 
