@@ -42,13 +42,10 @@ def goal_table(_type, goals, key):
 
 def form_appear():
     with st.form("add_goal_form"):
+        st.session_state["timeframe"] = "week"
         st.write("Add Goal")
-        data = {
-            "name": st.text_input("Goal Name"),
-            "timeframe": st.selectbox("timeframe", options={"week", "month", "year"}),
-            "start_date": time.strftime("%Y-%m-%d")
-
-        }
+        timeframe = st.selectbox("timeframe", ("month","week", "years"))
+        data = {"name": "name", "timeframe": timeframe, "start_date": "2024-05-10"}
         submitted = st.form_submit_button("Submit", on_click=create_goal, kwargs={"data": data})
         print(submitted)
 
