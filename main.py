@@ -19,7 +19,6 @@ def create_goal():
             "timeframe": st.session_state.timeframe,
             "start_date": st.session_state.goal_start_date}
     r = requests.post(url=_url, data=data)
-    print(r)
     return r.text
 
 
@@ -49,8 +48,7 @@ def form_appear():
         st.text_input("Goal Name", key="goal_name")
         st.selectbox("timeframe", ("month", "week", "year"), key="timeframe")
         st.date_input("start date", key="goal_start_date")
-        submitted = st.form_submit_button("Submit", on_click=create_goal)
-        print(submitted)
+        st.form_submit_button("Submit", on_click=create_goal)
 
 
 def add_goal_button():
