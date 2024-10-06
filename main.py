@@ -22,6 +22,14 @@ def create_goal():
     return r.text
 
 
+def delete_goal():
+    _url = "http://localhost:8000/goal"
+    data = {"name": st.session_state.name_delete,
+            "timeframe": st.session_state.timeframe_delete,
+            "start_date": st.session_state.start_date_delete}
+    r = requests.delete(url=_url, data=data)
+    return r.text
+
 def goal_table(_type, goals, key):
     st.write(_type["timeframe"])
     st.data_editor(
@@ -42,7 +50,7 @@ def goal_table(_type, goals, key):
     )
 
 
-def form_appear():
+def add_goal_form():
     with st.form("add_goal_form"):
         st.write("Add Goal")
         st.text_input("Goal Name", key="goal_name")
@@ -51,12 +59,27 @@ def form_appear():
         st.form_submit_button("Submit", on_click=create_goal)
 
 
+def delete_goal_form():
+    with st.form("delete_goal_form"):
+        st.write("Select Goal")
+        st.text_input("Goal Name", key="name_delete")
+        st.selectbox("timeframe", ("month", "week", "year"), key="timeframe_delete")
+        st.date_input("Start Date", key="start_date_delete")
+        st.form_submit_button("Submit", on_click=delete_goal)
+
+
 def add_goal_button():
     if st.button("Add Goal"):
-        form_appear()
+        add_goal_form()
+
+
+def delete_goal_button():
+    if st.button("Delete Goal"):
+        delete_goal_form()
 
 
 for _type in TABLE_TYPES:
     goals_dict = get_goals(_type)
     goal_table(_type, goals_dict, _type)
 add_goal_button()
+delete_goal_button()
