@@ -1,13 +1,11 @@
 import streamlit as st
 import pandas as pd
 import requests
-import time
-
 
 TABLE_TYPES = [{"timeframe": "year"}, {"timeframe": "month"}, {"timeframe": "week"}]
 
 
-def get_goals(params):
+def get_data(params):
     _url = "http://localhost:8000/goal"
     r = requests.get(url=_url, params=params)
     return r.json()
@@ -29,6 +27,7 @@ def delete_goal():
             "start_date": st.session_state.start_date_delete}
     r = requests.delete(url=_url, data=data)
     return r.text
+
 
 def goal_table(_type, goals, key):
     st.write(_type["timeframe"])
@@ -79,7 +78,7 @@ def delete_goal_button():
 
 
 for _type in TABLE_TYPES:
-    goals_dict = get_goals(_type)
+    goals_dict = get_data(_type)
     goal_table(_type, goals_dict, _type)
 add_goal_button()
 delete_goal_button()
