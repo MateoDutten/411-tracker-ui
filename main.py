@@ -5,6 +5,12 @@ import requests
 TABLE_TYPES = [{"timeframe": "year"}, {"timeframe": "month"}, {"timeframe": "week"}]
 
 
+def get_id():
+    _url = "http://localhost:8000/get_id"
+    r = requests.get(url=_url)
+    return r.json()
+
+
 def get_data(params):
     _url = "http://localhost:8000/goal"
     r = requests.get(url=_url, params=params)
@@ -22,11 +28,10 @@ def create_goal():
 
 def delete_goal():
     _url = "http://localhost:8000/goal"
-    data = {"name": st.session_state.name_delete,
-            "timeframe": st.session_state.timeframe_delete,
-            "start_date": st.session_state.start_date_delete}
+    data = {"goal_id": st.session_state.goal_id}
     r = requests.delete(url=_url, data=data)
     return r.text
+
 
 
 def goal_table(_type, goals, key):
@@ -61,9 +66,7 @@ def add_goal_form():
 def delete_goal_form():
     with st.form("delete_goal_form"):
         st.write("Select Goal")
-        st.text_input("Goal Name", key="name_delete")
-        st.selectbox("timeframe", ("month", "week", "year"), key="timeframe_delete")
-        st.date_input("Start Date", key="start_date_delete")
+        st.multiselect("Goals Id", get_id(), key="goal_id")
         st.form_submit_button("Submit", on_click=delete_goal)
 
 
