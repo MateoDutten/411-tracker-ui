@@ -26,3 +26,4 @@ yarn-error.log*
 
 # Pycharm files
 .idea
+venv

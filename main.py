@@ -28,7 +28,8 @@ def create_goal():
 
 def delete_goal():
     _url = "http://localhost:8000/goal"
-    data = {"goal_id": st.session_state.goal_id}
+    data = {"goal_id": st.session_state.goal_id[0]["id"]}
+    print(data)
     r = requests.delete(url=_url, data=data)
     return r.text
 
