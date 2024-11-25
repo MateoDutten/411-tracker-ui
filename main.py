@@ -5,11 +5,6 @@ import requests
 TABLE_TYPES = [{"timeframe": "year"}, {"timeframe": "month"}, {"timeframe": "week"}]
 
 
-def get_id():
-    _url = "http://localhost:8000/get_id"
-    r = requests.get(url=_url)
-    return r.json()
-
 
 def get_data(params):
     _url = "http://localhost:8000/goal"
@@ -26,33 +21,33 @@ def create_goal():
     return r.text
 
 
-def delete_goal():
+def delete_goal(goal_id):
     _url = "http://localhost:8000/goal"
-    data = {"goal_id": st.session_state.goal_id[0]["id"]}
-    print(data)
+    data = {"goal_id":goal_id}
     r = requests.delete(url=_url, data=data)
     return r.text
 
 
-
 def goal_table(_type, goals, key):
+    df = goals
     st.write(_type["timeframe"])
-    st.data_editor(
-        pd.DataFrame(goals),
-        width=800,
-        key=key,
-        column_config={
-            "Status": st.column_config.CheckboxColumn(
-                help="select which goal is **ended**",
-                width="small",
-                default=False,
-            ),
-            "Goal Name": st.column_config.Column(
-                width="large"
-            )},
-        disabled=["Goal Name"],
-        hide_index=True,
-    )
+    return st.data_editor(
+            df,
+            width=800,
+            key=key,
+            column_config={
+                "Status": st.column_config.CheckboxColumn(
+                    help="select which goal is **ended**",
+                    width="small",
+                    default=False,
+                ),
+                "Goal Name": st.column_config.Column(
+                    width="large"
+                )},
+            disabled=["Goal Name"],
+            hide_index=True,
+
+        )
 
 
 def add_goal_form():
@@ -64,25 +59,18 @@ def add_goal_form():
         st.form_submit_button("Submit", on_click=create_goal)
 
 
-def delete_goal_form():
-    with st.form("delete_goal_form"):
-        st.write("Select Goal")
-        st.multiselect("Goals Id", get_id(), key="goal_id")
-        st.form_submit_button("Submit", on_click=delete_goal)
-
-
 def add_goal_button():
-    if st.button("Add Goal"):
+    if st.button("Add Goal",):
         add_goal_form()
 
 
-def delete_goal_button():
-    if st.button("Delete Goal"):
-        delete_goal_form()
-
-
-for _type in TABLE_TYPES:
-    goals_dict = get_data(_type)
-    goal_table(_type, goals_dict, _type)
 add_goal_button()
-delete_goal_button()
+delete = st.button(label="Delete")
+for _type in TABLE_TYPES:
+    goals_dict = pd.DataFrame(get_data(_type))
+    goalstable = goal_table(_type, goals_dict, _type)
+    if delete:
+        selected = goalstable["id"].loc[goalstable.select_box]
+        for i in selected:
+            delete_goal(i)
+            st.rerun()
